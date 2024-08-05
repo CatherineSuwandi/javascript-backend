@@ -5,7 +5,7 @@
 
 const http = require('http')
 
-http.createServer( function(request, respon) {
+let Server = http.createServer( function(request, respon) {
     // mendeteksi status http 200 (user berhasil terkoneksi dengan aplikasi kita)
     // Content-type: apa tipe konten yg ingin diberikan ke user
     // text/plain itu akan menampilkan teks apa adanya
@@ -18,6 +18,6 @@ http.createServer( function(request, respon) {
 }) 
 
 
-Server.listen(3000, function() {
-    console.log('Server sudah siap, buka http://localhost:3000')
-})
+// Server.listen(3000, function() {
+//     console.log('Server sudah siap, buka http://localhost:3000')
+// })
