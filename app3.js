@@ -1,18 +1,21 @@
 const http = require('http')
+const fs = require('fs')
+
 
 let Server = http.createServer( function(request, respon) {
-    console.log(request)
+    //console.log(request)
     if (request.url == '/') {
         respon.writeHead(200, {'Content-type': 'text/html'})
         respon.write('<h1> Halaman Beranda</h1>')
         respon.end()
     } else if (request.url == '/profil') {
-        respon.writeHead(200, {'Content-type': 'text/html'})
-        respon.write('<h1> ini profil saya</h1>')
-        respon.end()
+       fs.createReadStream('./view/profil.html').pipe(respon)
+    } else if (request.url == '/berita') {
+        fs.createReadStream('./view/berita.html').pipe(respon)
+       
     } else {
         respon.writeHead(200, {'Content-type': 'text/html'})
-        respon.write('<h1> 404 not found</h1>')
+        respon.write('<h1> 404 Not Found</h1>')
         respon.end()
     }
 
