@@ -17,9 +17,7 @@ let Server = http.createServer( function(request, respon) {
         respon.writeHead(200, {'Content-type': 'text/html'})
         respon.write('<h1> 404 Not Found</h1>')
         respon.end()
-    }
-
-    
+    }    
 })
 
 Server.listen(3000, function() {
