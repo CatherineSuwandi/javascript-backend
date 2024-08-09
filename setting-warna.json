@@ -1,0 +1,13 @@
+{
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "keyword.operator.relational.js",
+                "settings": {
+                    "foreground": "#FF0000"
+                }
+            }
+        ]
+    }
+}
+    

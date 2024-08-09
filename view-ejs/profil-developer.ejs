@@ -1,0 +1,37 @@
+<h1>Profil Developer</h1>
+<hr>
+Nama: Catherine <br>
+Alamat: Alsut <br>
+No Telp: 0897 XXXX XXXX <br>
+Role: <%= jabatan %> <br>
+Jenis Kelamin: <%= gender %> <br>
+Gaji Pokok: Rp <%= gaji.toLocaleString('id-ID') %> <br>
+
+<!-- cara penulisan pertama logic di backend di ejs -->
+<!-- buka tutup tah ejs setiap baris sampai logicnya selesai -->
+<!-- htmlnya bisa auto ketik, karena htmlnya free akan tampil sesuai blok logic -->
+ <% if (gaji > 5000000) { %>
+        Status: <b>Kena Pajak Penghasilan 2.5%</b>
+    <% } else { %>
+        Status: <b>Tidak perlu bayar pajak</b>
+    <% } %>
+
+<br>
+
+<!-- cara penulisan pertama logic di backend di ejs -->
+ <!-- buka tutup tag ejs hanya sekali -->
+  <!-- htmlnya tidak bisa auto ketik -->
+<% 
+    if (gaji > 5000000) {
+        __append(' Status: <b>Kena Pajak Penghasilan 2.5%</b>')
+    } else {
+        __append('Status: <b>Tidak perlu bayar pajak</b>')
+    }
+
+
+%>
+
+<hr><hr>
+<a href="/hubungi">
+    <button>Pls Contact Me</button>
+</a>
