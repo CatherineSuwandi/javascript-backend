@@ -9,7 +9,7 @@ app.get('/', function(req, res) {
 
 // the '/hubungi' is called route that exists within the URL
 app.get('/hubungi', function(req, res) {
-    res.send(`<h1>Please Contact: XXX XXX XXXX</h1>`)
+    res.send(`<h1>Please Contact Here: XXX XXX XXXX</h1>`)
 })
 
 app.get('/login', function(req, res) {
