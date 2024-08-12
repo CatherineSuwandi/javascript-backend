@@ -1,6 +1,16 @@
 const express   = require('express')
 const app       = express()
 const port      = 3000
+const mysql     = require('mysql2')
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'jfd_belajar_database',
+})
+
+db.connect()
 
 
 app.set('view engine', 'ejs') // setting pengunaan template engine untuk express
@@ -32,6 +42,32 @@ res.render('profil-developer', data) // can be 'profil-developer.ejs' too
     // error bc express cant read files with the extension .html
     // res.send(require('./view/profil.html'))
 })
+
+
+// buat function terpisah untuk
+// proses pengambilan data dari awal
+function get_semuaKaryawan() {
+    return new Promise( (resolve,reject)=>{
+        db.query("SELECT * FROM employees", function(errorSql, hasil){
+                if (errorSql) {
+                    reject(errorSql)
+                } else {
+                    resolve(hasil)
+                }
+            }) 
+    })
+}
+
+
+app.get('/karyawan', async function(req,res) {
+    // gunakan async await, utuk memaksa node js
+    // menunggu script yg di panggil sampai selesai di eksekusi
+        let dataview = {
+         karyawan: await get_semuaKaryawan()
+        }
+    res.render('karyawan/index', dataview)
+}) 
+
 
 
 app.listen(port, function() {
