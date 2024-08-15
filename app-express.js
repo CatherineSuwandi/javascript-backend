@@ -193,10 +193,12 @@ app.post('/karyawan/proses-insert', async function(req,res) {
 
 function insert_karyawan(req) {
     let data = {
-        nama    : req.body.form_nama_lengkap,
-        gender  : req.body.form_gender,
-        alamat  : req.body.form_alamat,
-        nip     : req.body.form_nip,
+        nama              : req.body.form_nama_lengkap,
+        gender            : req.body.form_gender,
+        alamat            : req.body.form_alamat,
+        nip               : req.body.form_nip,
+        department_id     : req.body.form_department,
+        agama_id          : req.body.form_agama,
     }
     let sql = `INSERT INTO employees SET ?`;
 
@@ -212,6 +214,17 @@ function insert_karyawan(req) {
 
 }
 
+
+app.get('/karyawan/edit/:id_karyawan', async function(req,res) {
+    let idk = req.params.id_karyawan
+
+    let dataview = {
+        dept    : await get_semuaDepartment(),
+        agm     : await get_semuaAgama(),
+        pegawai : await get_satuKaryawan(idk),
+    }
+    res.render('karyawan/form-edit', dataview)
+})
 
 app.listen(port, function() {
     console.log('Server sudah siap, buka http://localhost:3000' + port)
