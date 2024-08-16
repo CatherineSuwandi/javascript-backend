@@ -1,4 +1,6 @@
-const db = require('../config/database').db
+const mysql         = require('mysql2')
+const db            = require('../config/database').db
+const eksekusi      = require('../config/database').eksekusi
 
 module.exports = 
 {
@@ -7,38 +9,24 @@ module.exports =
 // buat function terpisah untuk
 // proses pengambilan data dari awal
 get_semuaKaryawan: function() {
-    return new Promise( (resolve,reject)=>{
-        db.query("SELECT * FROM employees", function(errorSql, hasil){
-                if (errorSql) {
-                    reject(errorSql)
-                } else {
-                    resolve(hasil)
-                }
-            }) 
-    })
+    return eksekusi(mysql.format(
+        "SELECT * FROM employees"
+    ))
 },
 
 
 get_satuKaryawan: function(idk) {
-    let sql =
-    `SELECT 
+    return eksekusi(mysql.format(
+        `SELECT 
         employees.*, 
         department.kode AS kode_dept, department.nama AS nama_dept,
         agama.nama AS nama_agama
     FROM employees
     LEFT JOIN department    ON department.id = employees.department_id
     LEFT JOIN agama         ON agama.id = employees.agama_id
-    WHERE employees.id = ?`;
-
-    return new Promise( (resolve,reject)=>{
-        db.query(sql, [idk], function(errorSql, hasil){
-                if (errorSql) {
-                    reject(errorSql)
-                } else {
-                    resolve(hasil)
-                }
-            }) 
-    })
+    WHERE employees.id = ?`,
+    [idk]
+    ))
 },
 
 
@@ -51,17 +39,10 @@ insert_karyawan: function(req) {
         department_id     : req.body.form_department,
         agama_id          : req.body.form_agama,
     }
-    let sql = `INSERT INTO employees SET ?`;
-
-    return new Promise( (resolve,reject)=>{
-        db.query(sql, [data], function(errorSql, hasil){
-                if (errorSql) {
-                    reject(errorSql)
-                } else {
-                    resolve(hasil)
-                }
-            }) 
-    })
+    return eksekusi(mysql.format(
+        `INSERT INTO employees SET ?`,
+        [data]
+    ))
 
 },
 
@@ -74,33 +55,19 @@ update_karyawan: function(req, idk) {
         department_id     : req.body.form_department,
         agama_id          : req.body.form_agama,
     }
-    let sql = `UPDATE employees SET ? WHERE id = ?`;
+    return eksekusi(mysql.format(
+        `UPDATE employees SET ? WHERE id = ?`,
+        [data,idk]
+    ))
 
-    return new Promise( (resolve,reject)=>{
-        db.query(sql, [data, idk], function(errorSql, hasil){
-                if (errorSql) {
-                    reject(errorSql)
-                } else {
-                    resolve(hasil)
-                }
-            }) 
-    })
 },
 
 hapus_satuKaryawan: function(idk) {
-    let sql =
-    `DELETE FROM employees 
-    WHERE id = ?`;
-
-    return new Promise( (resolve,reject)=>{
-        db.query(sql, [idk], function(errorSql, hasil){
-                if (errorSql) {
-                    reject(errorSql)
-                } else {
-                    resolve(hasil)
-                }
-            }) 
-    })
+    return eksekusi(mysql.format(
+        `DELETE FROM employees 
+        WHERE id = ?`,
+        [idk]
+    ))
 }
 
 }
